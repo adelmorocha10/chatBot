@@ -41,16 +41,39 @@ model = genai.GenerativeModel (
 chat = model.start_chat(history=[])
 print ("-----SHOW DE PERGUNTAS-----", "\n")
 nome = input("Qual o seu nome? ")
-print ("\nBem vido ao Show de Perguntas ", nome, "\n")
+print ('\n', nome,"- Bem Vindo ao SHOW DE PERGUNTAS ", "\n")
 tema = input("Qual tema voce quer aprender hoje? ")
-print ("\nMuito bom, adoro essinar sobre ", tema, "\n")
+print ("\nMuito bom, adoro essinar sobre ",tema, "\n","-- ESTOU GERANDO SUA PERGUNTA --")
+jogador = "meu nome é ", nome
+iaChat = chat.send_message(jogador)
+
+
+modeloPergunta = [
+  'Primeiro presidente dos EUA?\n(A) George Washington\n(B) Abraham L.\n(C) Thomas J.',
+  'Qual é o maior planeta do sistema solar?\n(A) Júpiter\n(B) Marte\n(C) Vênus',
+  'Em que ano ocorreu a independência do Brasil?\n(A) 1822\n(B) 1888\n(C) 1500',
+  'Quem pintou a "Mona Lisa"?\n(A) Leonardo da Vinci\n(B) Michelangelo\n(C) Raphael',
+  'Qual é a capital da França?\n(A) Londres\n(B) Paris\n(C) Roma',
+  '2 + 2 é igual a?\n(A) 3\n(B) 4\n(C) 5',
+]
+
+iaChat = chat.send_message(modeloPergunta)
+
+regras = [
+  "use meu nome nas perguntas",
+  "quero perguntas com tres alternativas",
+  "nao coloque a resposta",
+  "Quando eu errar me corrija"
+]
+
 
 continuar = True
 
 while continuar:
-  pergunta = "Me faça uma pergunta com três escolhas, com o tema: ", tema
+  pergunta = "Me faça uma pergunta, com o tema: ", tema
+  iaChat = chat.send_message(regras)
   iaChat = chat.send_message(pergunta)
-  print(iaChat.text, "\n")
+  print("\n", iaChat.text, "\n")
   resposta = input("Digite a resposta por extenso ou 'fim' para encerrar: ")
   if resposta.lower() == 'fim':
     continuar = False
@@ -58,5 +81,6 @@ while continuar:
     resCorreta = "A resposta é: ", resposta, ".Se eu estiver errado me corrija"
     iaChat = chat.send_message(resCorreta)
     print("Resposta: ", iaChat.text, "\n\n\n")
-    print('proxima pergunta', '\n\n')  
+    print('----PROXIMA PERGUNTA----')  
+  
 
