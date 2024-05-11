@@ -1,7 +1,8 @@
 import google.generativeai as genai
 from google.generativeai.types import safety_types
-GOOGLE_API_KEY="AIzaSyAvH9DzLA9qAXOKJff4B3nRX3UPluGuXWw"
-genai.configure(api_key=GOOGLE_API_KEY)
+import os
+google_api_key = os.environ['SECRET_KEY']
+genai.configure(api_key=google_api_key)
 
 # model = genai.GenerativeModel('gemini-pro')
 
